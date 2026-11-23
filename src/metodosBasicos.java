@@ -43,21 +43,31 @@ public class metodosBasicos {
             System.out.println("Erro ao reescrever ficheiro " + caminhoFicheiro);
         }
     }
-    public static int obterProximoId(String caminhoFicheiro) {
+    public static String obterProximoId(String caminhoFicheiro) {
         List<String> linhas = lerTodasLinhas(caminhoFicheiro);
         int maiorId = 0;
+        String prefixo = "";
+
         for (String l : linhas) {
             String[] partes = l.split(";");
             if (partes.length > 0) {
-                try {
-                    int id = Integer.parseInt(partes[0].trim());
-                    if (id > maiorId) {
-                        maiorId = id;
-                    }
-                } catch (NumberFormatException ignored) {}
+
+                String[] idPartes=partes.trim().split("-");
+                if (idPartes.length==2){
+                    try {
+                        int id = Integer.parseInt(idPartes[1].trim());
+                        if (id > maiorId) {
+                            maiorId = id;
+                            prefixo = idPartes[0];
+                        }
+
+                    } catch (NumberFormatException ignored) {}
+                }
+
             }
         }
-        return maiorId + 1;
+
+        return return prefixo + "-" + (maiorId + 1);
     }
 
     //---------------------------------------------

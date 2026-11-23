@@ -58,7 +58,7 @@ public class funcoes {
 public static void criarNovoCliente() {
     Scanner input = new Scanner(System.in);
     System.out.println("\n-- Criar Novo Cliente --");
-    int novoId = metodosBasicos.obterProximoId("Files/clientesHotel.csv");
+    String novoId = metodosBasicos.obterProximoId("Files/clientesHotel.csv");
     System.out.print("Nome: ");
     String nome = input.nextLine().trim();
     System.out.print("Data de Nascimento (DD-MM-AAAA): ");
@@ -121,7 +121,7 @@ public static void criarNovoCliente() {
         Scanner input = new Scanner(System.in);
 
         System.out.println("\n-- Criar Novo Tema --");
-        int novoId = metodosBasicos.obterProximoId("Files/temasHotel.csv");
+        String novoId = metodosBasicos.obterProximoId("Files/temasHotel.csv");
         System.out.print("Nome do Tema: ");
         String nome = input.nextLine().trim();
         System.out.print("Multiplicador de Preço (ex: 1.2): ");
@@ -231,6 +231,12 @@ public static void listarQuartosDisponiveis(String tema) {
 
 }
 
+
+
+
+
+
+
 //reservas
     //listar reservas
 public static void listarReservas(boolean apenasAtivas) {
@@ -267,7 +273,7 @@ public static void listarReservas(boolean apenasAtivas) {
     public static void registarNovaReserva() {
         Scanner input = new Scanner(System.in);
         System.out.println("\n--- Rgistrar nova Reserva---");
-        int novoId = metodosBasicos.obterProximoId("Files/reservasHotel.csv");
+        String novoId = metodosBasicos.obterProximoId("Files/reservasHotel.csv");
         System.out.print("ID do Cliente: ");
         String idCli = input.nextLine().trim();
         System.out.print("Número do Quarto: ");
