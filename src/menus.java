@@ -34,18 +34,35 @@ public class menus {
             opcao = metodosBasicos.lerInteiro();
 
             switch (opcao) {
-                case 1: funcoes.criarNovoCliente(); break;
-                case 2: funcoes.atualizarContactosCliente(); break;
-                case 3: funcoes.criarNovoTema(); break;
-                case 4: funcoes.criarNovoQuarto(); break;
-                case 5: funcoes.criarNovasCredenciais(); break;
-                case 6: funcoes.excluirCredenciais(); break;
-                case 7: funcoes.criarNovoProduto(); break;
-                case 0: break;
-                default: System.out.println("Opção inválida!");
+                case 1:
+                    funcoes.criarNovoCliente();
+                    break;
+                case 2:
+                    funcoes.atualizarContactosCliente();
+                    break;
+                case 3:
+                    funcoes.criarNovoTema();
+                    break;
+                case 4:
+                    funcoes.criarNovoQuarto();
+                    break;
+                case 5:
+                    funcoes.criarNovasCredenciais();
+                    break;
+                case 6:
+                    funcoes.excluirCredenciais();
+                    break;
+                case 7:
+                    funcoes.criarNovoProduto();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
             }
         } while (opcao != 0);
     }
+
     //Submenu 2: Consultar clientes
     public static void menuConsultarClientes() {
         Scanner input = new Scanner(System.in);
@@ -87,16 +104,17 @@ public class menus {
                 case 2:
                     System.out.print("Introduza o Nome do Tema: ");
                     String tema = input.nextLine().trim();
-                    funcoes.listarQuartosDisponiveis(tema);
+                    funcoes.listarQuartosTema(tema);
                     break;
                 case 3:
                     System.out.print("Introduza o Tipo de Quarto (SINGLE, DOUBLE, SUITE): ");
                     String tipo = input.nextLine().trim().toUpperCase();
-                    funcoes.listarQuartosDisponiveis(tipo);
+                    funcoes.listarQuartosTipo(tipo);
                     break;
             }
         } while (opcao != 0);
     }
+
     //submenu 4: consultar reservas
     public static void menuConsultarReservas() {
         Scanner input = new Scanner(System.in);
@@ -120,7 +138,7 @@ public class menus {
 
     //submenu 5:analise
     public static void menuDashboard() {
-        Scanner input=new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         int opcao;
         do {
             System.out.println("\n--- Dashboard de analise financeira ---");
@@ -137,14 +155,30 @@ public class menus {
             opcao = metodosBasicos.lerInteiro(input);
 
             switch (opcao) {
-                case 1: calcularReceitaPorAno(); break;
-                case 2: calcularDespesaPorAno(); break;
-                case 3: calcularLucroPorAno(); break;
-                case 4: calcularMelhorCliente(); break;
-                case 5: calcularClienteMaisConsumista(); break;
-                case 6: calcularClienteMaisPresente(); break;
-                case 7: calcularEstatisticasTemas(); break;
-                case 8: calcularEstatisticasProdutos(); break;
+                case 1:
+                    funcoes.calcularReceitaPorAno();
+                    break;
+                case 2:
+                    calcularDespesaPorAno();
+                    break;
+                case 3:
+                    calcularLucroPorAno();
+                    break;
+                case 4:
+                    calcularMelhorCliente();
+                    break;
+                case 5:
+                    calcularClienteMaisConsumista();
+                    break;
+                case 6:
+                    calcularClienteMaisPresente();
+                    break;
+                case 7:
+                    calcularEstatisticasTemas();
+                    break;
+                case 8:
+                    calcularEstatisticasProdutos();
+                    break;
             }
         } while (opcao != 0);
     }
@@ -152,7 +186,7 @@ public class menus {
     //submenu 6: Galeria
 
     public static void menuGaleria() {
-        Scanner input=new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         int opcao;
         do {
             System.out.println("\n--- Galeria do Hotel ---");
@@ -173,7 +207,6 @@ public class menus {
 
         } while (opcao != 0);
     }
-
 
 
 }

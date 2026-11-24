@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class funcoes {
-    public static final String DATA_REFERENCIA="08-03-2024";
+    public static final String DATA_REFERENCIA = "08-03-2024";
 
     public static boolean efetuarLogin() {
         while (true) {
@@ -53,25 +53,25 @@ public class funcoes {
         return false;
     }
 
-//----------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
 //Gerir base de dados
-public static void criarNovoCliente() {
-    Scanner input = new Scanner(System.in);
-    System.out.println("\n-- Criar Novo Cliente --");
-    String novoId = metodosBasicos.obterProximoId("Files/clientesHotel.csv");
-    System.out.print("Nome: ");
-    String nome = input.nextLine().trim();
-    System.out.print("Data de Nascimento (DD-MM-AAAA): ");
-    String dataNasc = input.nextLine().trim();
-    System.out.print("Telemóvel: ");
-    String telemovel = input.nextLine().trim();
-    System.out.print("E-mail: ");
-    String email = input.nextLine().trim();
+    public static void criarNovoCliente() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("\n-- Criar Novo Cliente --");
+        String novoId = metodosBasicos.obterProximoId("Files/clientesHotel.csv");
+        System.out.print("Nome: ");
+        String nome = input.nextLine().trim();
+        System.out.print("Data de Nascimento (DD-MM-AAAA): ");
+        String dataNasc = input.nextLine().trim();
+        System.out.print("Telemóvel: ");
+        String telemovel = input.nextLine().trim();
+        System.out.print("E-mail: ");
+        String email = input.nextLine().trim();
 
-    String linha = novoId + ";" + nome + ";" + dataNasc + ";" + telemovel + ";" + email;
-    metodosBasicos.acrescentarLinhaFicheiro("Files/clientesHotel.csv", linha);
-    System.out.println("Cliente registado com sucesso! ID atribuído: " + novoId);
-}
+        String linha = novoId + ";" + nome + ";" + dataNasc + ";" + telemovel + ";" + email;
+        metodosBasicos.acrescentarLinhaFicheiro("Files/clientesHotel.csv", linha);
+        System.out.println("Cliente registado com sucesso! ID atribuído: " + novoId);
+    }
 
     public static void atualizarContactosCliente() {
         Scanner input = new Scanner(System.in);
@@ -146,6 +146,7 @@ public static void criarNovoCliente() {
         metodosBasicos.acrescentarLinhaFicheiro("Files/quartosHotel.csv", linha);
         System.out.println("Quarto " + numQuarto + " criado com sucesso!");
     }
+
     public static void criarNovasCredenciais() {
         Scanner input = new Scanner(System.in);
         System.out.println("\n-- Adicionar Novas Credenciais --");
@@ -223,50 +224,59 @@ public static void criarNovoCliente() {
         }
     }
 
-//-------------------------------------------------------------+
+    //-------------------------------------------------------------+
     //quartos
-public static void listarQuartosDisponiveis(String tema) {
-    List<String> quartos = metodosBasicos.lerTodasLinhas("Files/quartosHotel.csv");
-    List<String> reservas = metodosBasicos.lerTodasLinhas("Files/reservasHotel.csv");
 
-}
-
+    public static void listarQuartosDisponiveis() {
+        List<String> quartos = metodosBasicos.lerTodasLinhas("Files/quartosHotel.csv");
+        List<String> reservas = metodosBasicos.lerTodasLinhas("Files/reservasHotel.csv");
 
 
+    }
+
+    public static void listarQuartosTema(String tema) {
+        List<String> quartos = metodosBasicos.lerTodasLinhas("Files/quartosHotel.csv");
+        List<String> reservas = metodosBasicos.lerTodasLinhas("Files/reservasHotel.csv");
+
+    }
+
+    public static void listarQuartosTipo(String tipo) {
+        List<String> quartos = metodosBasicos.lerTodasLinhas("Files/quartosHotel.csv");
+        List<String> reservas = metodosBasicos.lerTodasLinhas("Files/reservasHotel.csv");
+
+    }
 
 
-
-
-//reservas
+    //reservas
     //listar reservas
-public static void listarReservas(boolean apenasAtivas) {
-    List<String> reservas = metodosBasicos.lerTodasLinhas("Files/reservasHotel.csv");
-    System.out.println(apenasAtivas ? "\n- Reservas ativas" : "\n- Historico de reservas ");
-    System.out.println("----------------------------------------------------------");
+    public static void listarReservas(boolean apenasAtivas) {
+        List<String> reservas = metodosBasicos.lerTodasLinhas("Files/reservasHotel.csv");
+        System.out.println(apenasAtivas ? "\n- Reservas ativas" : "\n- Historico de reservas ");
+        System.out.println("----------------------------------------------------------");
 
-    boolean achou = false;
-    for (String res : reservas) {
-        String[] dados = res.split(";");
-        if (dados.length >= 5) {
-            String idRes = dados[0].trim();
-            String inicio = dados[1].trim();
-            String fim = dados[2].trim();
-            String idCli = dados[3].trim();
-            String numQuarto = dados[4].trim();
+        boolean achou = false;
+        for (String res : reservas) {
+            String[] dados = res.split(";");
+            if (dados.length >= 5) {
+                String idRes = dados[0].trim();
+                String inicio = dados[1].trim();
+                String fim = dados[2].trim();
+                String idCli = dados[3].trim();
+                String numQuarto = dados[4].trim();
 
-            boolean eAtiva = metodosBasicos.compararDatas(fim, DATA_REFERENCIA) >= 0;
+                boolean eAtiva = metodosBasicos.compararDatas(fim, DATA_REFERENCIA) >= 0;
 
-            if ((apenasAtivas && eAtiva) || (!apenasAtivas && !eAtiva)) {
-                System.out.printf("\n", idRes, inicio, fim, idCli, numQuarto);
-                achou = true;
+                if ((apenasAtivas && eAtiva) || (!apenasAtivas && !eAtiva)) {
+                    System.out.printf("\n", idRes, inicio, fim, idCli, numQuarto);
+                    achou = true;
+                }
             }
         }
-    }
 
-    if (!achou) {
-        System.out.println("Nenhuma reserva encontrada.");
+        if (!achou) {
+            System.out.println("Nenhuma reserva encontrada.");
+        }
     }
-}
 
 
     //registrar reserva
@@ -327,9 +337,9 @@ public static void listarReservas(boolean apenasAtivas) {
         return diff > 0 ? diff : 1;
     }
 
-    public static int obterAnoReserva(String dataStr) {
+    public static int obterAnoReserva(String data) {
         try {
-            String[] p = dataStr.split("-");
+            String[] p = data.split("-");
             return Integer.parseInt(p[2].trim());
         } catch (Exception e) {
             return 2024;// Valor padrão caso haja erro
@@ -362,7 +372,8 @@ public static void listarReservas(boolean apenasAtivas) {
             if (d.length >= 3 && d[0].trim().equalsIgnoreCase(idTema)) {
                 try {
                     multiplicador = Double.parseDouble(d[2].trim());
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
                 break;
             }
         }
@@ -371,15 +382,12 @@ public static void listarReservas(boolean apenasAtivas) {
     }
 
 
+    public static void calcularReceitaPorAno() {
+
+    }
 
 
-
-
-
-
-
-
-//------------------------------------------------------------------
+    //------------------------------------------------------------------
     //galeria
     public static void imprimirFicheiroTexto(String nomeFicheiro) {
         File file = new File(nomeFicheiro);
@@ -389,7 +397,7 @@ public static void listarReservas(boolean apenasAtivas) {
         }
 
         try (Scanner sc = new Scanner(file)) {
-            System.out.println("\n " + nomeFicheiro );
+            System.out.println("\n " + nomeFicheiro);
             while (sc.hasNextLine()) {
                 System.out.println(sc.nextLine());
             }

@@ -23,6 +23,7 @@ public class metodosBasicos {
         }
         return linhas;
     }
+
     public static void acrescentarLinhaFicheiro(String caminhoFicheiro, String linha) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(caminhoFicheiro, true))) {
             //o true mantem todo o texto q ja esta no ficheiro
@@ -43,6 +44,7 @@ public class metodosBasicos {
             System.out.println("Erro ao reescrever ficheiro " + caminhoFicheiro);
         }
     }
+
     public static String obterProximoId(String caminhoFicheiro) {
         List<String> linhas = lerTodasLinhas(caminhoFicheiro);
         int maiorId = 0;
@@ -52,8 +54,8 @@ public class metodosBasicos {
             String[] partes = l.split(";");
             if (partes.length > 0) {
 
-                String[] idPartes=partes.trim().split("-");
-                if (idPartes.length==2){
+                String[] idPartes = partes.trim().split("-");
+                if (idPartes.length == 2) {
                     try {
                         int id = Integer.parseInt(idPartes[1].trim());
                         if (id > maiorId) {
@@ -61,7 +63,8 @@ public class metodosBasicos {
                             prefixo = idPartes[0];
                         }
 
-                    } catch (NumberFormatException ignored) {}
+                    } catch (NumberFormatException ignored) {
+                    }
                 }
 
             }
@@ -95,26 +98,25 @@ public class metodosBasicos {
             }
         }
     }
-//----------------------------------------------------
+
+    //----------------------------------------------------
     //datas
-public static int converterParaDiasAbsolutos(String dataStr) {
-    try {
-        String[] p = dataStr.split("-");
-        int dia = Integer.parseInt(p[0].trim());
-        int mes = Integer.parseInt(p[1].trim());
-        int ano = Integer.parseInt(p[2].trim());
-        // Simplificação acessível: 360 dias por ano, 30 por mês
-        return (ano * 360) + (mes * 30) + dia;
-    } catch (Exception e) {
-        return 0;
+    public static int converterParaDiasAbsolutos(String dataStr) {
+        try {
+            String[] p = dataStr.split("/");
+            int dia = Integer.parseInt(p[0].trim());
+            int mes = Integer.parseInt(p[1].trim());
+            int ano = Integer.parseInt(p[2].trim());
+            // Simplificação acessível: 360 dias por ano, 30 por mês
+            return (ano * 360) + (mes * 30) + dia;
+        } catch (Exception e) {
+            return 0;
+        }
     }
-}
+
     public static int compararDatas(String d1, String d2) {
         return Integer.compare(converterParaDiasAbsolutos(d1), converterParaDiasAbsolutos(d2));
     }
-
-
-
 
 
 }
