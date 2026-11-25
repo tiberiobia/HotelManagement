@@ -95,7 +95,7 @@ public class menus {
             System.out.println("3. Por Tipo de Quarto (SINGLE, DOUBLE, SUITE)");
             System.out.println("0. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
-            opcao = metodosBasicos.lerInteiro(input);
+            opcao = metodosBasicos.lerInteiro();
 
             switch (opcao) {
                 case 1:
@@ -125,7 +125,7 @@ public class menus {
             System.out.println("2. Reservas Ativas");
             System.out.println("0. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
-            opcao = metodosBasicos.lerInteiro(input);
+            opcao = metodosBasicos.lerInteiro();
             switch (opcao) {
                 case 1 -> funcoes.listarReservas(false); // false = Histórico (Passadas)
                 case 2 -> funcoes.listarReservas(true);  // true = Apenas Ativas
@@ -152,7 +152,7 @@ public class menus {
             System.out.println("8. Análise de Produtos/Serviços (Mais/Menos procurado e lucrativo)");
             System.out.println("0. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
-            opcao = metodosBasicos.lerInteiro(input);
+            opcao = metodosBasicos.lerInteiro();
 
             switch (opcao) {
                 case 1:
@@ -195,7 +195,7 @@ public class menus {
             System.out.println("3. Visualizar Spa");
             System.out.println("0. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
-            opcao = metodosBasicos.lerInteiro(input);
+            opcao = metodosBasicos.lerInteiro();
             String ficheiroArte = null;
             if (opcao == 1) ficheiroArte = "Files/galeriaFachadaHotel.txt";
             else if (opcao == 2) ficheiroArte = "Files/galeriaQuartoHotel.txt";

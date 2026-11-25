@@ -123,7 +123,7 @@ public class funcoes {
         System.out.print("Nome do Tema: ");
         String nome = input.nextLine().trim();
         System.out.print("Multiplicador de Preço (ex: 1.2): ");
-        double mult = metodosBasicos.lerDouble(input);
+        double mult = metodosBasicos.lerDouble();
 
         String linha = novoId + ";" + nome + ";" + mult;
         metodosBasicos.acrescentarLinhaFicheiro("Files/temasHotel.csv", linha);
@@ -134,7 +134,7 @@ public class funcoes {
         Scanner input = new Scanner(System.in);
         System.out.println("\n-- Criar Novo Quarto --");
         System.out.print("Número do Quarto: ");
-        int numQuarto = metodosBasicos.lerInteiro(input);
+        int numQuarto = metodosBasicos.lerInteiro();
         System.out.print("ID do Tema: ");
         String idTema = input.nextLine();
         System.out.print("Tipo de Quarto (SINGLE, DOUBLE, SUITE): ");
@@ -189,11 +189,11 @@ public class funcoes {
         Scanner input = new Scanner(System.in);
 
         System.out.println("\n-- Criar Novo Produto/Serviço --");
-        int novoId = metodosBasicos.obterProximoId("Files/produtosHotel.csv");
+        String novoId = metodosBasicos.obterProximoId("Files/produtosHotel.csv");
         System.out.print("Descrição do Produto/Serviço: ");
         String desc = input.nextLine().trim();
         System.out.print("Preço Unitário (€): ");
-        double preco = metodosBasicos.lerDouble(input);
+        double preco = metodosBasicos.lerDouble();
 
         String linha = novoId + ";" + desc + ";" + preco;
         metodosBasicos.acrescentarLinhaFicheiro("Files/produtosHotel.csv", linha);
@@ -229,127 +229,124 @@ public class funcoes {
         List<String> quartos = metodosBasicos.lerTodasLinhas("Files/quartosHotel.csv");
         List<String> reservas = metodosBasicos.lerTodasLinhas("Files/reservasHotel.csv");
 
-            Set<String> quartosOcupados = new HashSet<>();
-            for (String res : reservas) {
-                String[] dados = res.split(";");
-                if (dados.length >= 5) {
-                    String numQuarto = dados[4].trim();
-                    String dataFim = dados[2].trim();
-                    if (metodosBasicos.compararDatas(dataFim, DATA_REFERENCIA) >= 0) {
-                        quartosOcupados.add(numQuarto);
-                    }
+        Set<String> quartosOcupados = new HashSet<>();
+        for (String res : reservas) {
+            String[] dados = res.split(";");
+            if (dados.length >= 5) {
+                String numQuarto = dados[4].trim();
+                String dataFim = dados[2].trim();
+                if (metodosBasicos.compararDatas(dataFim, DATA_REFERENCIA) >= 0) {
+                    quartosOcupados.add(numQuarto);
                 }
-            }
-
-            System.out.println("\nQuartos Disponíveis:");
-            System.out.printf("%-15s %-10s %-15s\n", "Nº Quarto", "ID Tema", "Tipo Quarto");
-
-            boolean algum = false;
-            for (String q : quartos) {
-                String[] dados = q.split(";");
-                if (dados.length >= 3) {
-                    String numQ = dados[0].trim();
-                    String idTema = dados[1].trim();
-                    String tipoQ = dados[2].trim().toUpperCase();
-
-                    if (quartosOcupados.contains(numQ)) continue;
-
-                    System.out.printf("%-15s %-10s %-15s\n", numQ, idTema, tipoQ);
-                    algum = true;
-                }
-            }
-
-            if (!algum) {
-                System.out.println("Nenhum quarto disponível encontrado.");
             }
         }
 
-// 2. Filtra os quartos disponíveis por tema
-        public static void listarQuartosTema(String tema) {
-            List<String> quartos = metodosBasicos.lerTodasLinhas("Quartos.csv");
-            List<String> reservas = metodosBasicos.lerTodasLinhas("Reservas.csv");
+        System.out.println("\nQuartos Disponíveis:");
+        System.out.printf("%-15s %-10s %-15s\n", "Nº Quarto", "ID Tema", "Tipo Quarto");
 
-            Set<String> quartosOcupados = new HashSet<>();
-            for (String res : reservas) {
-                String[] dados = res.split(";");
-                if (dados.length >= 5) {
-                    String numQuarto = dados[4].trim();
-                    String dataFim = dados[2].trim();
-                    if (metodosBasicos.compararDatas(dataFim, DATA_REFERENCIA) >= 0) {
-                        quartosOcupados.add(numQuarto);
-                    }
-                }
-            }
+        boolean algum = false;
+        for (String q : quartos) {
+            String[] dados = q.split(";");
+            if (dados.length >= 3) {
+                String numQ = dados[0].trim();
+                String idTema = dados[1].trim();
+                String tipoQ = dados[2].trim().toUpperCase();
 
-            System.out.println("\nQuartos Disponíveis (Tema: " + tema + "):");
-            System.out.println("----------------------------------------");
-            System.out.printf("%-15s %-10s %-15s\n", "Nº Quarto", "ID Tema", "Tipo Quarto");
-            System.out.println("----------------------------------------");
+                if (quartosOcupados.contains(numQ)) continue;
 
-            boolean algum = false;
-            for (String q : quartos) {
-                String[] dados = q.split(",");
-                if (dados.length >= 3) {
-                    String numQ = dados[0].trim();
-                    String idTema = dados[1].trim();
-                    String tipoQ = dados[2].trim().toUpperCase();
-
-                    if (quartosOcupados.contains(numQ)) continue;
-                    if (!idTema.equalsIgnoreCase(tema)) continue;
-
-                    System.out.printf("%-15s %-10s %-15s\n", numQ, idTema, tipoQ);
-                    algum = true;
-                }
-            }
-
-            if (!algum) {
-                System.out.println("Nenhum quarto disponível encontrado para o tema indicado.");
+                System.out.printf("%-15s %-10s %-15s\n", numQ, idTema, tipoQ);
+                algum = true;
             }
         }
 
-// 3.Filtra os quartos disponíveis por tipo
-        public static void listarQuartosTipo(String tipo) {
-            List<String> quartos = metodosBasicos.lerTodasLinhas("Quartos.csv");
-            List<String> reservas = metodosBasicos.lerTodasLinhas("Reservas.csv");
+        if (!algum) {
+            System.out.println("Nenhum quarto disponível encontrado.");
+        }
+    }
 
-            Set<String> quartosOcupados = new HashSet<>();
-            for (String res : reservas) {
-                String[] dados = res.split(";");
-                if (dados.length >= 5) {
-                    String numQuarto = dados[4].trim();
-                    String dataFim = dados[2].trim();
-                    if (metodosBasicos.compararDatas(dataFim, DATA_REFERENCIA) >= 0) {
-                        quartosOcupados.add(numQuarto);
-                    }
+    // 2. Filtra os quartos disponíveis por tema
+    public static void listarQuartosTema(String tema) {
+        List<String> quartos = metodosBasicos.lerTodasLinhas("Quartos.csv");
+        List<String> reservas = metodosBasicos.lerTodasLinhas("Reservas.csv");
+
+        Set<String> quartosOcupados = new HashSet<>();
+        for (String res : reservas) {
+            String[] dados = res.split(";");
+            if (dados.length >= 5) {
+                String numQuarto = dados[4].trim();
+                String dataFim = dados[2].trim();
+                if (metodosBasicos.compararDatas(dataFim, DATA_REFERENCIA) >= 0) {
+                    quartosOcupados.add(numQuarto);
                 }
-            }
-
-            System.out.println("\nQuartos Disponíveis (Tipo: " + tipo + "):");
-            System.out.printf("%-15s %-10s %-15s\n", "Nº Quarto", "ID Tema", "Tipo Quarto");
-
-            boolean algum = false;
-            for (String q : quartos) {
-                String[] dados = q.split(",");
-                if (dados.length >= 3) {
-                    String numQ = dados[0].trim();
-                    String idTema = dados[1].trim();
-                    String tipoQ = dados[2].trim().toUpperCase();
-
-                    if (quartosOcupados.contains(numQ)) continue;
-                    if (!tipoQ.equalsIgnoreCase(tipo)) continue;
-
-                    System.out.printf("%-15s %-10s %-15s\n", numQ, idTema, tipoQ);
-                    algum = true;
-                }
-            }
-
-            if (!algum) {
-                System.out.println("Nenhum quarto disponível encontrado para o tipo indicado.");
             }
         }
 
+        System.out.println("\nQuartos Disponíveis (Tema: " + tema + "):");
+        System.out.println("----------------------------------------");
+        System.out.printf("%-15s %-10s %-15s\n", "Nº Quarto", "ID Tema", "Tipo Quarto");
+        System.out.println("----------------------------------------");
 
+        boolean algum = false;
+        for (String q : quartos) {
+            String[] dados = q.split(",");
+            if (dados.length >= 3) {
+                String numQ = dados[0].trim();
+                String idTema = dados[1].trim();
+                String tipoQ = dados[2].trim().toUpperCase();
 
+                if (quartosOcupados.contains(numQ)) continue;
+                if (!idTema.equalsIgnoreCase(tema)) continue;
+
+                System.out.printf("%-15s %-10s %-15s\n", numQ, idTema, tipoQ);
+                algum = true;
+            }
+        }
+
+        if (!algum) {
+            System.out.println("Nenhum quarto disponível encontrado para o tema indicado.");
+        }
+    }
+
+    // 3.Filtra os quartos disponíveis por tipo
+    public static void listarQuartosTipo(String tipo) {
+        List<String> quartos = metodosBasicos.lerTodasLinhas("Quartos.csv");
+        List<String> reservas = metodosBasicos.lerTodasLinhas("Reservas.csv");
+
+        Set<String> quartosOcupados = new HashSet<>();
+        for (String res : reservas) {
+            String[] dados = res.split(";");
+            if (dados.length >= 5) {
+                String numQuarto = dados[4].trim();
+                String dataFim = dados[2].trim();
+                if (metodosBasicos.compararDatas(dataFim, DATA_REFERENCIA) >= 0) {
+                    quartosOcupados.add(numQuarto);
+                }
+            }
+        }
+
+        System.out.println("\nQuartos Disponíveis (Tipo: " + tipo + "):");
+        System.out.printf("%-15s %-10s %-15s\n", "Nº Quarto", "ID Tema", "Tipo Quarto");
+
+        boolean algum = false;
+        for (String q : quartos) {
+            String[] dados = q.split(",");
+            if (dados.length >= 3) {
+                String numQ = dados[0].trim();
+                String idTema = dados[1].trim();
+                String tipoQ = dados[2].trim().toUpperCase();
+
+                if (quartosOcupados.contains(numQ)) continue;
+                if (!tipoQ.equalsIgnoreCase(tipo)) continue;
+
+                System.out.printf("%-15s %-10s %-15s\n", numQ, idTema, tipoQ);
+                algum = true;
+            }
+        }
+
+        if (!algum) {
+            System.out.println("Nenhum quarto disponível encontrado para o tipo indicado.");
+        }
+    }
 
 
     //reservas
@@ -488,7 +485,7 @@ public class funcoes {
 
 
     public static void calcularReceitaPorAno() {
-        Map<Integer, Double> receitaAno = new TreeMap<>();
+        Map<Integer, Double> receitaAno = new TreeMap<>();// o tree deixa ordenado
         List<String> reservas = metodosBasicos.lerTodasLinhas("Files/reservasHotel.csv");
 
         for (String res : reservas) {
@@ -514,11 +511,17 @@ public class funcoes {
             System.out.printf("Ano %d: %.2f€\n", entry.getKey(), entry.getValue());
         }
     }
+    public static void calcularDespesaPorAno(){
+        Map<Integer, Double> despesaAno = new TreeMap<>();
+//        por cada noite que um quarto é alugado o hotel tem as seguintes despesas fixas:
+//• Limpeza: 17.5
+//• Despesas Luz/Água: 12.75
+//• Serviços Administrativos: 7.25
 
 
 
 
-
+    }
 
     //------------------------------------------------------------------
     //galeria

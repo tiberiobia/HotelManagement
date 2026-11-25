@@ -27,7 +27,7 @@ public class metodosBasicos {
     public static void acrescentarLinhaFicheiro(String caminhoFicheiro, String linha) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(caminhoFicheiro, true))) {
             //o true mantem todo o texto q ja esta no ficheiro
-            // printWriter da muda de linha automaticamente e transforma int e double automaticamente em string
+            // printWriter ja muda de linha automaticamente e transforma int e double automaticamente em string
             writer.println(linha);
         } catch (IOException e) {
             System.out.println("Erro ao escrever no ficheiro " + caminhoFicheiro);
@@ -45,37 +45,45 @@ public class metodosBasicos {
         }
     }
 
+
     public static String obterProximoId(String caminhoFicheiro) {
         List<String> linhas = lerTodasLinhas(caminhoFicheiro);
         int maiorId = 0;
         String prefixo = "";
+        int tamanhoNumero = 0;
 
         for (String l : linhas) {
+
             String[] partes = l.split(";");
             if (partes.length > 0) {
+                String[] idPartes = partes[0].trim().split("-");
 
-                String[] idPartes = partes.trim().split("-");
                 if (idPartes.length == 2) {
                     try {
-                        int id = Integer.parseInt(idPartes[1].trim());
+                        String numStr = idPartes[1].trim();
+                        int id = Integer.parseInt(numStr);
+
                         if (id > maiorId) {
                             maiorId = id;
-                            prefixo = idPartes[0];
+                            prefixo = idPartes[0].trim();
+                            tamanhoNumero = numStr.length();
                         }
-
                     } catch (NumberFormatException ignored) {
+                        // Ignora cabeçalhos ou linhas inválidas
                     }
                 }
-
             }
         }
 
-        return return prefixo + "-" + (maiorId + 1);
+        int proximoId = maiorId + 1;
+
+        return prefixo + "-" + proximoId;
     }
 
     //---------------------------------------------
     //Ler numeros
-    public static int lerInteiro(Scanner sc) {
+    public static int lerInteiro() {
+        Scanner sc=new Scanner(System.in);
 
         while (true) {
             try {
@@ -87,7 +95,8 @@ public class metodosBasicos {
         }
     }
 
-    public static double lerDouble(Scanner sc) {
+    public static double lerDouble() {
+        Scanner sc=new Scanner(System.in);
 
         while (true) {
             try {

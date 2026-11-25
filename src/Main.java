@@ -23,7 +23,7 @@ public class Main {
             do {
                 menus.exibirMenuPrincipal();
                 System.out.print("Escolha uma opção: ");
-                opcao = metodosBasicos.lerInteiro(input);
+                opcao = metodosBasicos.lerInteiro();
 
                 switch (opcao) {
                     case 1:
